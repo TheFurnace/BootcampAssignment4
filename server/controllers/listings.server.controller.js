@@ -1,7 +1,6 @@
-
 /* Dependencies */
-var mongoose = require('mongoose'), 
-    Listing = require('../models/listings.server.model.js');
+var mongoose = require("mongoose"),
+  Listing = require("../models/listings.server.model.js");
 
 /*
   In this file, you should use Mongoose queries in order to retrieve/add/remove/update listings.
@@ -14,14 +13,12 @@ var mongoose = require('mongoose'),
 
 /* Create a listing */
 exports.create = function(req, res) {
-
   /* Instantiate a Listing */
   var listing = new Listing(req.body);
 
-
   /* Then save the listing */
   listing.save(function(err) {
-    if(err) {
+    if (err) {
       console.log(err);
       res.status(400).send(err);
     } else {
@@ -40,23 +37,41 @@ exports.read = function(req, res) {
 exports.update = function(req, res) {
   var listing = req.listing;
 
-  /** TODO **/
-  /* Replace the article's properties with the new properties found in req.body */
-  /* Save the article */
+  listing.set(req.body);
+  listing.save((err, newListing) => {
+    if (err) {
+      console.log("Failed to update database for listing: " + listing);
+      res.status(400).send("Failed to update database");
+    }
+    res.send(newListing);
+  });
 };
 
 /* Delete a listing */
 exports.delete = function(req, res) {
   var listing = req.listing;
 
-  /** TODO **/
-  /* Remove the article */
+  Listing.remove(listing, err => {
+    if (err) {
+      res.status(400);
+      res.send("Failed to delete listing");
+    }
+    res.send("Deleted listing");
+  });
 };
 
 /* Retreive all the directory listings, sorted alphabetically by listing code */
 exports.list = function(req, res) {
-  /** TODO **/
-  /* Your code here */
+  Listing.find({}).exec((err, listings) => {
+    if (err) {
+      console.log("Failed to list all listings");
+      res.status(400).send("Failed to list all listings");
+    }
+    listings.sort((a, b) => {
+      return ("" + a.code).localeCompare(b.code);
+    });
+    res.send(listings);
+  });
 };
 
 /* 
@@ -68,7 +83,7 @@ exports.list = function(req, res) {
  */
 exports.listingByID = function(req, res, next, id) {
   Listing.findById(id).exec(function(err, listing) {
-    if(err) {
+    if (err) {
       res.status(400).send(err);
     } else {
       req.listing = listing;

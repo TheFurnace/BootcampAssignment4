@@ -5,6 +5,11 @@
   "main": "server.js",
   "author": "Medhir Bhargava",
   "license": "MIT",
+  "scripts": {
+    "test": "npm run test-model && npm run test-routes",
+    "test-model": "mocha --exit ./server/tests/listings.server.model.test.js",
+    "test-routes": "mocha --exit ./server/tests/listings.server.routes.test.js"
+  },
   "dependencies": {
     "body-parser": "^1.14.1",
     "express": "^4.13.3",
