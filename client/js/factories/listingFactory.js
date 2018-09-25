@@ -1,7 +1,5 @@
 angular.module("listings", []).factory("Listings", function($http) {
-  var _url = process.env.PORT
-    ? "https://uf-directory-app-ferndq.herokuapp.com"
-    : "http://localhost:8080";
+  var _url = "https://uf-directory-app-ferndq.herokuapp.com";
   var methods = {
     getAll: function() {
       return $http.get(url + "/api/listings");
