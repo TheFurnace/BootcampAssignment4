@@ -1,6 +1,6 @@
 {
   "name": "Assignment4",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Routing server-side requests using ExpressJS",
   "main": "server.js",
   "author": "Medhir Bhargava",
@@ -9,7 +9,7 @@
     "test": "npm run test-model && npm run test-routes",
     "test-model": "mocha --exit ./server/tests/listings.server.model.test.js",
     "test-routes": "mocha --exit ./server/tests/listings.server.routes.test.js",
-    "web": "node server.js"
+    "start": "node server.js"
   },
   "dependencies": {
     "body-parser": "^1.14.1",
