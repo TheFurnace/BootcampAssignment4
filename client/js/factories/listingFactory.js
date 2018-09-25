@@ -1,15 +1,16 @@
 angular.module("listings", []).factory("Listings", function($http) {
+  var _url = "https://uf-directory-app-ferndq.herokuapp.com";
   var methods = {
     getAll: function() {
-      return $http.get("http://localhost:8080/api/listings");
+      return $http.get(url + "/api/listings");
     },
 
     create: function(listing) {
-      return $http.post("http://localhost:8080/api/listings", listing);
+      return $http.post(url + "/api/listings", listing);
     },
 
     delete: function(id) {
-      return $http.delete("http://localhost:8080/api/listings/" + id);
+      return $http.delete(url + "/api/listings/" + id);
     }
   };
 
